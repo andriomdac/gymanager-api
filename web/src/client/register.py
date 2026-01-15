@@ -1,0 +1,41 @@
+import requests as rq
+from ._base import BASE_URL
+from utils.http import build_api_headers
+
+
+class RegisterAPIClient:
+    def __init__(self) -> None:
+        self._base_url = f"{BASE_URL}/cash-registers"
+
+    def open_register_for_today(self, request):
+        return rq.api.post(
+            url=f"{self._base_url}/open-today/", headers=build_api_headers(request)
+        )
+
+    def list_registers(self, request):
+        return rq.api.get(url=f"{self._base_url}/", headers=build_api_headers(request))
+
+    def list_open_registers_only(self, request):
+        return rq.api.get(
+            url=f"{self._base_url}/list-open/", headers=build_api_headers(request)
+        )
+
+    def open_register(self, request, register_date=None):
+        data = {}
+        if register_date:
+            data["register_date"] = register_date
+        return rq.api.post(
+            url=f"{self._base_url}/", headers=build_api_headers(request), json=data
+        )
+
+    def close_register(self, request, register_id):
+        return rq.api.post(
+            url=f"{self._base_url}/{register_id}/close/",
+            headers=build_api_headers(request),
+        )
+
+    def detail_register(self, request, register_id):
+        return rq.api.get(
+            url=f"{self._base_url}/{register_id}/",
+            headers=build_api_headers(request),
+        )

@@ -1,0 +1,34 @@
+services:
+  api:
+    build: .
+    working_dir: /app/api/
+    ports:
+      - 8000:8000
+    command: >
+      sh -c "
+      gunicorn app.wsgi:application
+      --bind 0.0.0.0:8000
+      --workers 2
+      --worker-class gthread
+      --threads 2
+      --timeout 30
+      "
+    volumes:
+      - ./api/:/database/
+    restart: always
+
+  web:
+    build: .
+    working_dir: /app/web/
+    ports:
+      - 8001:8000
+    command: >
+      sh -c "
+      gunicorn app.wsgi:application
+      --bind 0.0.0.0:8000
+      --workers 2
+      --worker-class gthread
+      --threads 2
+      --timeout 30
+      "
+    restart: always

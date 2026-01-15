@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5 bg-dark text-light">
+
+    <div class="text-center mb-4">
+        <h2 class="display-6 fw-bold text-light mb-2">
+            <i class="bi bi-cash-stack me-2 text-success"></i> Entradas do Mês
+        </h2>
+        <small class="text-secondary">Mês {{ data.month }}/{{ data.year }}</small>
+    </div>
+
+    <div class="mb-4 text-start">
+      {% include 'components/goback_to_finance.html' %}
+    </div>
+
+    {% include 'components/finance_cards.html' %}
+
+    <h3 class="h4 fw-bold text-light mt-5 mb-3 text-center">
+        <i class="bi bi-wallet2 me-2 text-success"></i> Lista de Entradas
+    </h3>
+
+    <div class="list-group">
+        {% for v in data.values %}
+        <div class="list-group-item bg-dark text-light border-success shadow-lg rounded-4 mb-3 p-4">
+
+            <div class="d-flex justify-content-between mb-2">
+                <span class="fw-semibold">
+                    <i class="bi bi-calendar3 me-1 text-success"></i> {{ v.date }}
+                </span>
+                <span class="fw-bold text-success fs-4">R$ {{ v.value }}</span>
+            </div>
+
+            <p class="mb-1 text-light fs-6">
+                <i class="bi bi-credit-card me-1 text-success"></i> {{ v.method }}
+            </p>
+
+        </div>
+        {% empty %}
+        <div class="text-center py-4 text-success border border-success rounded-4 bg-dark">
+            <i class="bi bi-info-circle me-2 text-success"></i> Nenhuma entrada registrada.
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

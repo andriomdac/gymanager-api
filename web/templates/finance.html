@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5 bg-dark text-light">
+
+    <div class="text-center mb-4">
+        <h2 class="display-6 fw-bold text-light mb-2">
+            <i class="bi bi-bar-chart-line-fill me-2 text-warning"></i> Resumo Mensal
+        </h2>
+        <small class="text-secondary">Mês {{ data.month }}/{{ data.year }}</small>
+    </div>
+
+    <form method="post" class="mb-5">
+        {% csrf_token %}
+        <div class="row justify-content-center g-3">
+
+            <div class="col-md-3">
+                <label class="form-label text-light">Mês</label>
+                <input type="number" name="month" min="1" max="12" value="{{ data.month }}" class="form-control bg-dark text-light border-secondary" required>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label text-light">Ano</label>
+                <input type="number" name="year" min="2000" max="2100" value="{{ data.year }}" class="form-control bg-dark text-light border-secondary" required>
+            </div>
+
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-warning w-100 fw-bold rounded-pill">
+                    <i class="bi bi-search me-1"></i> Filtrar
+                </button>
+            </div>
+
+        </div>
+    </form>
+
+    {% include 'components/finance_cards.html' %}
+
+</div>
+{% endblock %}

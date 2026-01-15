@@ -1,0 +1,38 @@
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from src.client.token import TokenAPIClient
+from icecream import ic
+
+
+def login(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        response = TokenAPIClient().get_token(username=username, password=password)
+        if response.status_code == 200:
+            access_token = response.json()["access"]
+            refresh_token = response.json()["refresh"]
+
+            request.session["access"] = access_token
+            request.session["refresh"] = refresh_token
+            request.session["user"] = username
+
+            return redirect("list_students")
+        else:
+            messages.error(
+                request,
+                "Login falhou. Verifique seu usuário e senha e tente novamente.",
+                extra_tags="danger",
+            )
+            return redirect("login")
+
+    return render(request, template_name="login.html")
+
+
+def logout(request):
+    if "access" in request.session:
+        del request.session["access"]
+    if "refresh" in request.session:
+        del request.session["refresh"]
+    return redirect("login")

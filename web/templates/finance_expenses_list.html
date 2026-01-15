@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5 bg-dark text-light">
+
+    <div class="text-center mb-4">
+        <h2 class="display-6 fw-bold text-light mb-2">
+            <i class="bi bi-receipt-cutoff me-2 text-danger"></i> Despesas do Mês
+        </h2>
+        <small class="text-secondary">Mês {{ data.month }}/{{ data.year }}</small>
+    </div>
+
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col text-start">
+          {% include 'components/goback_to_finance.html' %}
+        </div>
+        <div class="col text-end">
+          {% include 'components/create_expense_btn.html' %}
+        </div>
+      </div>
+    </div>
+
+    {% include 'components/finance_cards.html' %}
+
+    <h3 class="h4 fw-bold text-light mt-5 mb-3 text-center">
+        <i class="bi bi-journal-text me-2 text-danger"></i> Lista de Despesas
+    </h3>
+
+    <div class="list-group">
+        {% for e in data.expense_list %}
+        <div class="list-group-item bg-dark text-light border-danger shadow-lg rounded-4 mb-3 p-4 d-flex justify-content-between align-items-center">
+
+            <div class="me-3 flex-grow-1"> 
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="fw-semibold">
+                        <i class="bi bi-calendar3 me-1 text-danger"></i> {{ e.expense_date }}
+                    </span>
+
+                    <span class="fw-bold text-danger fs-4">R$ {{ e.value }}</span>
+                </div>
+
+                <p class="mb-1 fs-6">
+                    <i class="bi bi-pencil-square me-1 text-danger"></i> {{ e.description }}
+                </p>
+
+                <small class="text-secondary">
+                    <i class="bi bi-person-circle me-1 text-danger"></i> Registrado por {{ e.registered_by }}
+                </small>
+            </div>
+
+            <form method="POST" action="." class="ms-3">
+                {% csrf_token %}
+                <input type="hidden" name="delete_expense" value="{{ e.id }}">
+                <button type="submit"
+                        class="btn btn-outline-danger btn-sm"
+                        title="Deletar Despesa"
+                        onclick="return confirm('Tem certeza que deseja deletar a despesa de R$ {{ e.value }} ({{ e.description }})?');">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </form>
+
+        </div>
+        {% empty %}
+        <div class="text-center py-4 text-danger border border-danger rounded-4 bg-dark">
+            <i class="bi bi-exclamation-circle me-2 text-danger"></i> Nenhuma despesa registrada.
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="text-center p-5 rounded-3 shadow-lg bg-dark w-100" style="max-width: 800px;">
+        
+        <h1 class="display-4 mb-3 text-light">
+            <i class="bi bi-emoji-smile-fill me-2"></i> Bem-vindo!
+        </h1>
+
+        <h2 class="fs-4 mb-4 text-secondary">O sistema está pronto para uso.</h2>
+
+        <p class="lead mb-5 text-light">
+            Navegue pela barra superior para acessar todas as funcionalidades disponíveis.
+        </p>
+
+        <a href="{% url 'list_students' %}" class="btn btn-outline-primary">
+            <i class="bi bi-arrow-right-circle me-2"></i> Ir para Alunos
+        </a>
+    </div>
+</div>
+
+{% endblock %}

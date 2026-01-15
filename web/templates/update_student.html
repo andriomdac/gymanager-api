@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-8"> 
+            <div class="card border-0 shadow-lg bg-dark rounded-4 p-4 p-md-5">
+                <div class="card-body">
+                    <h2 class="display-6 fw-bold text-light mb-4 text-center">
+                        <i class="bi bi-pencil-square text-info me-2"></i> Editar Aluno
+                    </h2>
+
+                    <div class="text-center mb-5">
+                      <p class="text-warning font-bold text-lg mb-2">
+                        Altere os dados do aluno abaixo.
+                      </p>
+                      <p class="text-secondary">
+                        Os campos refletem os valores atuais do registro.
+                      </p>
+                    </div>
+
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <div class="form-floating mb-3">
+                          <input type="text" name="name" id="name" value="{{ student.name }}" class="form-control rounded-3" placeholder="Nome completo" required>
+                            <label for="name"><i class="bi bi-person me-2"></i> Nome do Aluno</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" name="phone" value="{{ student.phone }}" id="phone" class="form-control rounded-3" placeholder="Telefone de contato" required>
+                            <label for="phone"><i class="bi bi-telephone-fill me-2"></i> Telefone</label>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <input type="text" name="reference" value="{{ student.reference }}" id="reference" class="form-control rounded-3" placeholder="Referência/Observação">
+                            <label for="reference"><i class="bi bi-card-text me-2"></i> Referência</label>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button class="btn btn-info btn-lg fw-bold rounded-3" type="submit">
+                                <i class="bi bi-pencil-fill me-2"></i> Confirmar Alteração
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5 bg-dark text-light">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 text-center mb-5">
+            <h2 class="display-6 fw-bold text-light mb-2">
+                <i class="bi bi-cash-stack me-2 text-success"></i> Registrar Novo Pagamento
+            </h2>
+            <p class="text-light mb-0">Selecione o pacote e adicione observações (opcional).</p>
+        </div>
+
+        <div class="col-lg-10 mb-5">
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="text-center">
+                    <span class="badge bg-primary rounded-circle p-3 mb-2 shadow-sm d-block mx-auto" style="width: 40px; height: 40px;">
+                        <i class="bi bi-1-circle-fill fs-5 text-white"></i>
+                    </span>
+                    <small class="fw-bold text-primary d-block">1. Pacote</small>
+                </div>
+
+                <div class="border-top mx-3 border-secondary" style="width: 150px; border-color: #495057 !important;"></div>
+
+                <div class="text-center">
+                    <span class="badge bg-dark text-light border rounded-circle p-3 mb-2 d-block mx-auto" style="width: 40px; height: 40px; border-color: #6c757d !important;">
+                        <i class="bi bi-2-circle fs-5"></i>
+                    </span>
+                    <small class="text-light d-block">2. Valor</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-10">
+            <div class="row justify-content-center g-4">
+                
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-lg rounded-4 p-4 h-100 bg-dark text-light">
+                        <div class="card-body">
+                            <h3 class="h4 text-light fw-bold mb-4 border-bottom border-secondary pb-2">
+                                <i class="bi bi-person-vcard text-warning me-2"></i> Informações do Aluno
+                            </h3>
+                            
+                            <div class="mb-3">
+                                <p class="mb-0 text-light fw-semibold small"><i class="bi bi-person-fill me-2 text-warning"></i> Nome do Aluno</p>
+                                <span class="fw-bolder fs-4 text-white">{{ student.name }}</span>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <p class="mb-0 text-light fw-semibold small"><i class="bi bi-hash me-2 text-warning"></i> ID de Matrícula</p>
+                                <span class="fw-bold text-light">{{ student.id }}</span>
+                            </div>
+                            
+                            <hr class="my-4 border-secondary">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-lg rounded-4 p-4 h-100 bg-dark text-light">
+                        <div class="card-body">
+                            <h3 class="h4 text-center fw-bold text-light mb-4 border-bottom border-secondary pb-2">
+                                <i class="bi bi-input-cursor-text text-warning me-2"></i> Selecionar Opções
+                            </h3>
+
+                            <form method="post" novalidate>
+                                {% csrf_token %}
+
+                                <div class="form-floating mb-3">
+                                    <select id="package" name="package" class="form-select rounded-3 bg-dark text-light border-secondary" required aria-label="Selecione um pacote">
+                                        <option selected disabled class="text-light">Selecione um pacote...</option>
+                                        {% for package in packages %}
+                                        <option value="{{ package.id }}" class="text-light">{{ package.name }} — {{ package.duration_days }} dias</option>
+                                        {% endfor %}
+                                    </select>
+                                    <label for="package"><i class="bi bi-gift-fill text-warning me-2"></i> Pacote de Pagamento</label>
+                                </div>
+
+                                <div class="form-floating mb-4">
+                                    <select id="cash_register" name="cash_register" class="form-select rounded-3 bg-dark text-light border-secondary" required aria-label="Selecione o caixa">
+                                        <option value="" selected disabled class="text-light">Selecione um caixa aberto...</option>
+                                        <option value="" selected class="text-light">Caixa do dia: Hoje</option>
+                                        {% for register in open_registers %}
+                                        <option value="{{ register.id }}" class="text-light">{{ register.register_date }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <label for="cash_register"><i class="bi bi-safe-fill text-warning me-2"></i> Caixa de Registro</label>
+                                </div>
+                                
+                                <div class="form-floating mb-4">
+                                    <textarea id="observations" name="observations" class="form-control rounded-3 bg-dark text-light border-secondary" placeholder="Observações (opcional)" style="height: 100px"></textarea>
+                                    <label for="observations"><i class="bi bi-chat-left-text-fill text-warning me-2"></i> Observações (opcional)</label>
+                                </div>
+                                
+                                <div class="d-grid mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg fw-bold rounded-pill shadow">
+                                        <i class="bi bi-check-circle-fill me-2"></i> Continuar para o Valor
+                                    </button>
+                                </div>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

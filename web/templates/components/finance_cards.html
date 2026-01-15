@@ -1,0 +1,47 @@
+<div class="row g-4">
+
+    <!-- RECEITA -->
+    <div class="col-md-4">
+        <form method="post" class="m-0">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="revenues">
+            <button type="submit" class="card bg-dark border-secondary shadow rounded-4 p-3 h-100 w-100 text-start text-light" style="border: none;">
+                <div class="card-body text-center">
+                    <p class="fw-semibold text-light mb-1">
+                        <i class="bi bi-cash-stack text-success me-2"></i> Receita
+                    </p>
+                    <span class="fw-bold display-6 text-success">R$ {{ data.total_month_revenue }}</span>
+                </div>
+            </button>
+        </form>
+    </div>
+
+    <!-- DESPESAS -->
+    <div class="col-md-4">
+        <form method="post" class="m-0">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="expenses">
+            <button type="submit" class="card bg-dark border-secondary shadow rounded-4 p-3 h-100 w-100 text-start text-light" style="border: none;">
+                <div class="card-body text-center">
+                    <p class="fw-semibold text-light mb-1">
+                        <i class="bi bi-credit-card-2-front-fill text-danger me-2"></i> Despesas
+                    </p>
+                    <span class="fw-bold display-6 text-danger">R$ {{ data.total_expense }}</span>
+                </div>
+            </button>
+        </form>
+    </div>
+
+    <!-- LUCRO LÍQUIDO (NÃO CLICÁVEL) -->
+    <div class="col-md-4">
+        <div class="card bg-dark border-secondary shadow rounded-4 p-3 h-100">
+            <div class="card-body text-center">
+                <p class="fw-semibold text-light mb-1">
+                    <i class="bi bi-graph-up-arrow text-info me-2"></i> Lucro Líquido
+                </p>
+                <span class="fw-bold display-6 text-info">R$ {{ data.net_profit }}</span>
+            </div>
+        </div>
+    </div>
+
+</div>
